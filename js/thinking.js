@@ -93,7 +93,7 @@
 
                     const response =
                         await fetch(
-                            `../articles/thinking/${topic}/index.json`
+                            `../articles/${topic}/index.json`
                         );
 
 
@@ -151,7 +151,7 @@
                                 return `
 
 <a
-    href="article.html?post=thinking/${topic}/${encodeURIComponent(path)}"
+    href="article.html?post=${topic}/${encodeURIComponent(path)}"
     class="article-card"
 >
 
