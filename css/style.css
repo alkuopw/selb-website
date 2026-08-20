@@ -1111,3 +1111,58 @@ a.is-current {
 
     background: transparent;
 }
+/* ============================================
+   Star Field
+   ============================================ */
+
+.star-field {
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+
+    overflow: hidden;
+
+    z-index: 0;
+}
+
+
+.star {
+    position: absolute;
+
+    display: block;
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 4px currentColor;
+
+    animation:
+        star-twinkle
+        ease-in-out
+        infinite;
+
+    will-change:
+        opacity,
+        transform;
+}
+
+
+@keyframes star-twinkle {
+
+    0%,
+    100% {
+        opacity: 0.25;
+        transform: scale(0.85);
+    }
+
+    50% {
+        opacity: 0.85;
+        transform: scale(1.15);
+    }
+
+}
