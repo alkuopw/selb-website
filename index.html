@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Freesia Hybrida</title>
+<meta name="description" content="Freesia Hybrida — 个人网站">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+SC:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- 流星特效层 -->
+  <div class="meteor-field" aria-hidden="true"></div>
+
+  <!-- 汉堡菜单按钮 -->
+  <button class="menu-toggle" data-menu-toggle aria-label="打开菜单" aria-expanded="false">
+    <span class="menu-toggle__bar">
+      <span></span><span></span><span></span>
+    </span>
+  </button>
+
+  <!-- 展开式导航 -->
+  <nav class="nav-overlay" data-nav-overlay>
+    <ul class="nav-overlay__list">
+      <li><a href="pages/thinking.html"><span class="index">01</span>思考与批判</a></li>
+      <li><a href="pages/art.html"><span class="index">02</span>文艺</a></li>
+      <li><a href="pages/about.html"><span class="index">03</span>关于本站</a></li>
+    </ul>
+  </nav>
+
+  <!-- 首页主视觉 -->
+  <header class="hero">
+    <h1 class="hero__title">Freesia <em>Hybrida</em></h1>
+    <div class="hero__rule"></div>
+    <p class="hero__signature" data-signature></p>
+    <span class="hero__scroll-hint">Scroll</span>
+  </header>
+
+  <!-- 壁纸展示区 -->
+  <section class="wallpaper">
+    <div class="wallpaper__frame">
+      <!-- 桌面端显示竖屏壁纸 -->
+      <img class="wallpaper__img wallpaper__img--portrait"
+           src="images/wallpaper-portrait.jpg"
+           alt="竖屏壁纸">
+      <!-- 移动端显示横屏壁纸 -->
+      <img class="wallpaper__img wallpaper__img--landscape"
+           src="images/wallpaper-landscape.jpg"
+           alt="横屏壁纸">
+    </div>
+  </section>
+
+  <script src="js/meteors.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
