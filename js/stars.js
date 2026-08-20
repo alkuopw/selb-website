@@ -49,8 +49,8 @@
 star.style.background = color;
 star.style.boxShadow =
     `0 0 4px ${color}`;
-        star.style.opacity =
-            Math.random() * 0.55 + 0.25;
+       star.style.opacity =
+    Math.random() * 0.45 + 0.45;
 
         const duration =
             Math.random() * 5 + 3;
