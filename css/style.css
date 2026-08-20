@@ -1127,7 +1127,11 @@ a.is-current {
 
     overflow: hidden;
 
-    z-index: 0;
+    /*
+     * 流星是 z-index: 10
+     * 所以星空放在流星下面
+     */
+    z-index: 9;
 }
 
 
