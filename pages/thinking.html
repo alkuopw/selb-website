@@ -27,7 +27,7 @@
     </ul>
   </nav>
 
-  <main class="page thinking-page">
+<main class="page thinking-page">
 
     <p class="page__eyebrow">
         01 / Reflection
@@ -37,181 +37,120 @@
         思考与批判
     </h1>
 
-    <div class="thinking-intro">
+
+    <div class="page__body">
+
         <p>
-            这里存放一些关于世界、生活与思维方式的记录。
-            不追求完整的结论，只记录思考本身留下的痕迹。
+            这里存放一些关于阅读、时事与思维方式的记录——
+            并不追求结论，只记录思考本身留下的痕迹。
         </p>
+
     </div>
 
 
-    <!-- =========================
-         世界 / 思维
-         ========================= -->
+    <section class="thinking-topics">
 
-    <section class="article-section">
+        <!-- 世界 / 思维 -->
 
-        <div class="article-section__heading">
+        <div class="thinking-topic">
 
-            <span class="article-section__number">
-                01
-            </span>
-
-            <h2>
-                世界 / 思维
-            </h2>
-
-        </div>
-
-
-        <div class="article-list">
-
-            <a
-                href="article.html?post=world/article-1"
-                class="article-card"
+            <button
+                class="thinking-topic__button"
+                data-topic="world"
+                aria-expanded="false"
             >
 
-                <div class="article-card__meta">
-                    WORLD / THINKING
-                </div>
-
-                <h3 class="article-card__title">
-                    文章标题一
-                </h3>
-
-                <p class="article-card__excerpt">
-                    这里是一段文章简介，用两三句话概括
-                    文章讨论的问题以及你写下它的原因。
-                </p>
-
-                <span class="article-card__more">
-                    阅读全文 →
+                <span class="thinking-topic__index">
+                    01
                 </span>
 
-            </a>
+                <span class="thinking-topic__title">
+                    世界 / 思维
+                </span>
+
+                <span class="thinking-topic__symbol">
+                    +
+                </span>
+
+            </button>
 
 
-            <a
-                href="article.html?post=world/article-2"
-                class="article-card"
+            <div
+                class="thinking-topic__articles"
+                data-articles="world"
+                hidden
+            >
+            </div>
+
+        </div>
+
+
+        <!-- 生活 -->
+
+        <div class="thinking-topic">
+
+            <button
+                class="thinking-topic__button"
+                data-topic="life"
+                aria-expanded="false"
             >
 
-                <div class="article-card__meta">
-                    WORLD / THINKING
-                </div>
-
-                <h3 class="article-card__title">
-                    文章标题二
-                </h3>
-
-                <p class="article-card__excerpt">
-                    文章简介放在这里。
-                </p>
-
-                <span class="article-card__more">
-                    阅读全文 →
+                <span class="thinking-topic__index">
+                    02
                 </span>
 
-            </a>
+                <span class="thinking-topic__title">
+                    生活
+                </span>
 
-        </div>
+                <span class="thinking-topic__symbol">
+                    +
+                </span>
 
-    </section>
+            </button>
 
 
-    <!-- =========================
-         生活
-         ========================= -->
-
-    <section class="article-section">
-
-        <div class="article-section__heading">
-
-            <span class="article-section__number">
-                02
-            </span>
-
-            <h2>
-                生活
-            </h2>
+            <div
+                class="thinking-topic__articles"
+                data-articles="life"
+                hidden
+            >
+            </div>
 
         </div>
 
 
-        <div class="article-list">
+        <!-- 摘录 -->
 
-            <a
-                href="article.html?post=life/article-1"
-                class="article-card"
+        <div class="thinking-topic">
+
+            <button
+                class="thinking-topic__button"
+                data-topic="excerpts"
+                aria-expanded="false"
             >
 
-                <div class="article-card__meta">
-                    LIFE
-                </div>
-
-                <h3 class="article-card__title">
-                    生活中的一些记录
-                </h3>
-
-                <p class="article-card__excerpt">
-                    关于日常、经历与生活本身的一些文字。
-                </p>
-
-                <span class="article-card__more">
-                    阅读全文 →
+                <span class="thinking-topic__index">
+                    03
                 </span>
 
-            </a>
+                <span class="thinking-topic__title">
+                    摘录
+                </span>
 
-        </div>
+                <span class="thinking-topic__symbol">
+                    +
+                </span>
 
-    </section>
-
-
-    <!-- =========================
-         摘录
-         ========================= -->
-
-    <section class="article-section">
-
-        <div class="article-section__heading">
-
-            <span class="article-section__number">
-                03
-            </span>
-
-            <h2>
-                摘录
-            </h2>
-
-        </div>
+            </button>
 
 
-        <div class="article-list">
-
-            <a
-                href="article.html?post=excerpts/article-1"
-                class="article-card"
+            <div
+                class="thinking-topic__articles"
+                data-articles="excerpts"
+                hidden
             >
-
-                <div class="article-card__meta">
-                    EXCERPTS
-                </div>
-
-                <h3 class="article-card__title">
-                    一些值得留下的文字
-                </h3>
-
-                <p class="article-card__excerpt">
-                    从书籍、文章或其他地方摘录的，
-                    以及我认为值得再次阅读的片段。
-                </p>
-
-                <span class="article-card__more">
-                    阅读全文 →
-                </span>
-
-            </a>
+            </div>
 
         </div>
 
