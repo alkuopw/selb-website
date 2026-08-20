@@ -1170,3 +1170,64 @@ a.is-current {
     }
 
 }
+/* ============================================
+   GitHub Open Source Link
+   ============================================ */
+
+.github-link {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 0.55rem;
+
+    margin-top: 1rem;
+
+    margin-left: 2.5rem;
+
+    color: var(--color-text-dim);
+
+    font-family: var(--font-ui);
+
+    font-size: 0.65rem;
+
+    letter-spacing: 0.12em;
+
+    text-decoration: none;
+
+    transition:
+        color 0.3s ease,
+        opacity 0.3s ease;
+}
+
+
+.github-link:hover {
+    color: var(--color-text);
+
+    opacity: 1;
+}
+
+
+.github-link__icon {
+    width: 18px;
+
+    height: 18px;
+
+    fill: currentColor;
+
+    flex-shrink: 0;
+
+    transition:
+        transform 0.3s ease;
+}
+
+
+.github-link:hover
+.github-link__icon {
+    transform: scale(1.1);
+}
+
+
+.github-link__text {
+    white-space: nowrap;
+}
