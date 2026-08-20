@@ -1160,12 +1160,12 @@ a.is-current {
 
     0%,
     100% {
-        opacity: 0.25;
+        opacity: 0.40;
         transform: scale(0.85);
     }
 
     50% {
-        opacity: 0.85;
+        opacity: 1;
         transform: scale(1.15);
     }
 
