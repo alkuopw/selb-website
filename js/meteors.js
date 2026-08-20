@@ -46,7 +46,7 @@
    * 10 颗
    */
   const METEOR_COUNT =
-    isMobile ? 10 : 24;
+    isMobile ? 5 : 10;
 
 
   /*
