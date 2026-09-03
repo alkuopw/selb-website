@@ -27,7 +27,7 @@ cd "$env:LOCALAPPDATA\Android\Sdk\platform-tools"
 ```
 如果输出：<br>
 List of devices attached<br>
-192.168.3.xx.xxxx      device<br><br>
+192.168.x.xx.xxxx      device<br><br>
 那么再看到你Android Studio 的Device manager页面，会出现你的真机了。<br><br>
 如果提示目标计算机拒绝，那么手机关闭无线调试，再开启，从头连贯再操作一遍。
 
