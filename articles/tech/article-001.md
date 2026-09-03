@@ -15,12 +15,12 @@ cd "$env:LOCALAPPDATA\Android\Sdk\platform-tools"
 ```
 .\adb.exe pair 192.168.x.xx:XXXX
 ```
-（填写你手机上的IP地址和端口号）
-再：
+（填写你手机上的IP地址和端口号，需要输入配对码）
+如果看到配对成功再：
 ```
 .\adb.exe connect 192.168.x.xx:xxxx
 ```
-（还是换成你的）<br>
+（还是换成你的， **注意这次地址端口号和上次会不一样，填写手机无线调试页面显示的，而不是之前配对码窗口显示的** ）<br>
 接下来：
 ```
 .\adb.exe devices
@@ -28,7 +28,8 @@ cd "$env:LOCALAPPDATA\Android\Sdk\platform-tools"
 如果输出：<br>
 List of devices attached<br>
 192.168.3.xx.xxxx      device<br><br>
-那么再看到你Android Studio 的Device manager页面，会出现你的真机了。
+那么再看到你Android Studio 的Device manager页面，会出现你的真机了。<br><br>
+如果提示目标计算机拒绝，那么手机关闭无线调试，再开启，从头连贯再操作一遍。
 
 
 
