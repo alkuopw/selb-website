@@ -9,10 +9,10 @@ export async function onRequest(context) {
         .test(ua);
 
     // 只保护 zy 栏目
-    const isJusticeArticle = post.startsWith("/pages/thinking");
+const isThinkingPage = url.pathname === "/pages/thinking";
 
-    if (isJusticeArticle && blockedBrowser) {
-        return new Response(
+if (isThinkingPage && blockedBrowser) {
+    return new Response(
             `<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
