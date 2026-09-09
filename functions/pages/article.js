@@ -2,7 +2,18 @@ export async function onRequest(context) {
     const url = new URL(context.request.url);
     const post = url.searchParams.get("post") || "";
     const ua = context.request.headers.get("User-Agent") || "";
-
+const crawler =
+    /Baiduspider|Googlebot|bingbot|YandexBot|Sogou|360Spider|Bytespider|PetalBot/i
+    .test(ua);
+    if (isJusticeArticle && crawler) {
+    return new Response("Forbidden", {
+        status: 403,
+        headers: {
+            "X-Robots-Tag":
+                "noindex, nofollow, noarchive, nosnippet"
+        }
+    });
+}
     // ================================
     // 1. 微信 / QQ 内置浏览器检测
     // ================================
