@@ -9,7 +9,7 @@ export async function onRequest(context) {
         .test(ua);
 
     // 只保护 zy 栏目
-    const isJusticeArticle = post.startsWith("zy/");
+    const isJusticeArticle = post.startsWith("/pages/thinking");
 
     if (isJusticeArticle && blockedBrowser) {
         return new Response(
@@ -30,8 +30,8 @@ body {
 </style>
 </head>
 <body>
-<h2>此文章无法在当前浏览器中打开</h2>
-<p>正义栏目不支持微信或 QQ 内置浏览器。</p>
+<h2>此页面无法在当前浏览器中打开</h2>
+<p>不支持微信或 QQ 内置浏览器。</p>
 <p>请使用 Chrome、Edge、Firefox 或其他独立浏览器打开。</p>
 </body>
 </html>`,
