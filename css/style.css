@@ -1361,11 +1361,7 @@ a.is-current {
         padding-left 0.3s ease;
 }
 
-.article-content img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-}
+
 .thinking-topic__articles
 .article-card:hover {
     background:
@@ -1441,4 +1437,8 @@ a.is-current {
 
     color:
         var(--color-text-dim);
+}
+.article-content img {
+    max-width: 100%;
+    height: auto;
 }
