@@ -971,7 +971,11 @@ a.is-current {
 
     line-height: 2;
 }
-
+#article img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
 
 #article h1 {
     margin:
@@ -1438,7 +1442,4 @@ a.is-current {
     color:
         var(--color-text-dim);
 }
-.article-content img {
-    max-width: 100%;
-    height: auto;
-}
+
