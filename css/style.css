@@ -1443,3 +1443,25 @@ a.is-current {
         var(--color-text-dim);
 }
 
+
+.wallpaper-entry {
+  margin: 36px 0 24px;
+  text-align: center;
+}
+
+.wallpaper-entry__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 24px;
+  color: #e9d4b7;
+  border: 1px solid #94704d;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.wallpaper-entry__button:hover {
+  color: #171312;
+  background: #c99b65;
+}
