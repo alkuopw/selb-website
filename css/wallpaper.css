@@ -1,0 +1,171 @@
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: #eee8df;
+  background:
+    radial-gradient(ellipse at top, #3b2927 0%, transparent 55%),
+    #151414;
+  font-family: "Noto Sans SC", sans-serif;
+}
+
+.wallpaper-container {
+  width: min(900px, 92%);
+  margin: 0 auto;
+  padding: 28px 0 60px;
+}
+
+.back-link {
+  color: #d9bda0;
+  text-decoration: none;
+}
+
+.wallpaper-header {
+  text-align: center;
+  margin: 48px 0 32px;
+}
+
+.eyebrow {
+  color: #c99b65;
+  font-size: 12px;
+  letter-spacing: 0.25em;
+}
+
+.wallpaper-header h1 {
+  margin: 12px 0;
+  font-size: clamp(28px, 6vw, 42px);
+  font-weight: 500;
+}
+
+.subtitle,
+.gallery-hint {
+  color: #aaa09a;
+  font-size: 14px;
+}
+
+.password-panel {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 26px;
+  border: 1px solid #51403a;
+  border-radius: 14px;
+  background: #211e1d;
+}
+
+.password-panel label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.password-panel input {
+  width: 100%;
+  padding: 13px;
+  color: #fff;
+  background: #151414;
+  border: 1px solid #655047;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+.password-panel button,
+.next-button {
+  width: 100%;
+  margin-top: 14px;
+  padding: 13px;
+  color: #211814;
+  background: #c99b65;
+}
+
+button:hover {
+  filter: brightness(1.08);
+}
+
+#password-message {
+  margin-bottom: 0;
+  color: #e8a59a;
+  font-size: 14px;
+}
+
+.gallery {
+  text-align: center;
+}
+
+.main-image-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  overflow: hidden;
+  border: 1px solid #51403a;
+  border-radius: 12px;
+  background: #211e1d;
+}
+
+#main-image {
+  display: block;
+  max-width: 100%;
+  max-height: 72vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.gallery-hint {
+  margin: 20px 0 12px;
+}
+
+.thumbnails {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.thumbnail {
+  display: block;
+  padding: 3px;
+  overflow: hidden;
+  background: #292321;
+  border: 1px solid #51403a;
+  border-radius: 8px;
+}
+
+.thumbnail img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.thumbnail[aria-current="true"] {
+  border-color: #c99b65;
+}
+
+.next-button {
+  max-width: 360px;
+  margin-top: 24px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 480px) {
+  .password-panel {
+    padding: 20px;
+  }
+
+  .thumbnails {
+    gap: 6px;
+  }
+}
