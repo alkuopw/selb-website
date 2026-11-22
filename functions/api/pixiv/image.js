@@ -1,4 +1,4 @@
-export async function onRequestGet({ request }) {
+export async function onRequestGet({ request, env }) {
   const headers = {
     "Cache-Control": "public, max-age=3600",
     "X-Content-Type-Options": "nosniff"
@@ -23,12 +23,23 @@ export async function onRequestGet({ request }) {
     return new Response("Image host is not allowed.", { status: 403 });
   }
 
+  const relayUrl = (env.PIXIV_RELAY_URL || "").replace(/\/+$/, "");
+  const relaySecret = env.PIXIV_RELAY_SECRET || "";
+
+  if (!relayUrl || !relaySecret) {
+    return new Response("Pixiv relay is not configured.", { status: 503 });
+  }
+
   try {
-    const upstream = await fetch(imageUrl.toString(), {
+    const relayEndpoint = new URL(`${relayUrl}/api/image`);
+    relayEndpoint.searchParams.set("url", imageUrl.toString());
+
+    const upstream = await fetch(relayEndpoint.toString(), {
+      method: "GET",
       headers: {
-        Referer: "https://www.pixiv.net/",
-        "User-Agent": "Mozilla/5.0"
-      }
+        Authorization: `Bearer ${relaySecret}`
+      },
+      signal: AbortSignal.timeout(90000)
     });
 
     if (!upstream.ok) {
@@ -38,7 +49,7 @@ export async function onRequestGet({ request }) {
     }
 
     const contentType = upstream.headers.get("Content-Type") || "";
-    if (!contentType.startsWith("image/")) {
+    if (!contentType.toLowerCase().startsWith("image/")) {
       return new Response("Upstream did not return an image.", { status: 502 });
     }
 
