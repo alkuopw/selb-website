@@ -247,3 +247,74 @@ form.addEventListener("submit", async event => {
 nextButton.addEventListener("click", () => {
   renderGallery(chooseRandom([currentImage]));
 });
+
+// Pixiv R-18 随机插画
+const pixivRandomButton = document.getElementById("pixiv-random-button");
+const pixivStatus = document.getElementById("pixiv-status");
+const pixivResult = document.getElementById("pixiv-result");
+const pixivImage = document.getElementById("pixiv-image");
+const pixivInfo = document.getElementById("pixiv-info");
+const pixivOriginal = document.getElementById("pixiv-original");
+
+if (pixivRandomButton) {
+  // Debug mode: temporarily allow access without age-checkbox confirmation.
+  pixivRandomButton.disabled = false;
+
+  pixivRandomButton.addEventListener("click", async () => {
+    pixivRandomButton.disabled = true;
+    pixivRandomButton.textContent = "正在获取插画……";
+    if (pixivStatus) pixivStatus.textContent = "正在连接 Pixiv，请稍候。";
+    if (pixivResult) pixivResult.hidden = true;
+
+    try {
+      const response = await fetch("/api/pixiv/random", {
+        method: "GET",
+        headers: { "Accept": "application/json" },
+        cache: "no-store"
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || result.ok !== true || !result.illust) {
+        throw new Error(result.error || "获取插画失败，请稍后重试。");
+      }
+
+      const illust = result.illust;
+      if (!pixivImage || !pixivInfo || !pixivOriginal || !pixivResult) {
+        throw new Error("页面缺少插画展示区域，请刷新页面后重试。");
+      }
+
+      const proxiedImage = "/api/pixiv/image?url=" +
+        encodeURIComponent(illust.image);
+
+      pixivImage.onload = () => {
+        pixivResult.hidden = false;
+        if (pixivStatus) pixivStatus.textContent = "已获取一张 Pixiv R-18 插画。";
+      };
+      pixivImage.onerror = () => {
+        pixivResult.hidden = true;
+        if (pixivStatus) {
+          pixivStatus.textContent = "插画信息已获取，但图片加载失败。请再试一次。";
+        }
+      };
+
+      pixivImage.alt = illust.title || "Pixiv R-18 插画";
+      pixivImage.src = proxiedImage;
+      pixivInfo.textContent =
+        (illust.title || "未命名作品") + " — " +
+        (illust.user || "未知画师");
+      pixivOriginal.href = illust.originalUrl;
+      pixivOriginal.textContent = "在 Pixiv 查看原作品";
+      pixivResult.hidden = false;
+      if (pixivStatus) pixivStatus.textContent = "插画信息已获取，正在加载图片。";
+    } catch (error) {
+      if (pixivStatus) {
+        pixivStatus.textContent =
+          error.message || "暂时无法获取 Pixiv 插画，请稍后重试。";
+      }
+    } finally {
+      pixivRandomButton.disabled = false;
+      pixivRandomButton.textContent = "再来一张 Pixiv 随机图";
+    }
+  });
+}
