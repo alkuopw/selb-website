@@ -249,7 +249,6 @@ nextButton.addEventListener("click", () => {
 });
 
 // Pixiv R-18 随机插画
-const pixivAgeConfirm = document.getElementById("pixiv-age-confirm");
 const pixivRandomButton = document.getElementById("pixiv-random-button");
 const pixivStatus = document.getElementById("pixiv-status");
 const pixivResult = document.getElementById("pixiv-result");
@@ -257,26 +256,11 @@ const pixivImage = document.getElementById("pixiv-image");
 const pixivInfo = document.getElementById("pixiv-info");
 const pixivOriginal = document.getElementById("pixiv-original");
 
-if (pixivAgeConfirm && pixivRandomButton) {
-  const syncPixivButton = () => {
-    pixivRandomButton.disabled = !pixivAgeConfirm.checked;
-  };
-
-  // Bind the checkbox independently from the optional result-display elements.
-  pixivAgeConfirm.addEventListener("click", syncPixivButton);
-  pixivAgeConfirm.addEventListener("input", syncPixivButton);
-  pixivAgeConfirm.addEventListener("change", syncPixivButton);
-  syncPixivButton();
+if (pixivRandomButton) {
+  // Debug mode: temporarily allow access without age-checkbox confirmation.
+  pixivRandomButton.disabled = false;
 
   pixivRandomButton.addEventListener("click", async () => {
-    if (!pixivAgeConfirm.checked) {
-      if (pixivStatus) {
-        pixivStatus.textContent = "请先确认自己已年满 18 周岁。";
-      }
-      syncPixivButton();
-      return;
-    }
-
     pixivRandomButton.disabled = true;
     pixivRandomButton.textContent = "正在获取插画……";
     if (pixivStatus) pixivStatus.textContent = "正在连接 Pixiv，请稍候。";
@@ -329,7 +313,7 @@ if (pixivAgeConfirm && pixivRandomButton) {
           error.message || "暂时无法获取 Pixiv 插画，请稍后重试。";
       }
     } finally {
-      syncPixivButton();
+      pixivRandomButton.disabled = false;
       pixivRandomButton.textContent = "再来一张 Pixiv 随机图";
     }
   });
