@@ -266,9 +266,14 @@ if (
   pixivInfo &&
   pixivOriginal
 ) {
-  pixivAgeConfirm.addEventListener("change", () => {
+  const syncPixivButton = () => {
     pixivRandomButton.disabled = !pixivAgeConfirm.checked;
-  });
+  };
+
+  // Handle both input and change events, and initialize the state immediately.
+  pixivAgeConfirm.addEventListener("input", syncPixivButton);
+  pixivAgeConfirm.addEventListener("change", syncPixivButton);
+  syncPixivButton();
 
   pixivRandomButton.addEventListener("click", async () => {
     if (!pixivAgeConfirm.checked) {
