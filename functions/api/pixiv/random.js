@@ -68,12 +68,22 @@ async function getAccessToken(env) {
   const cacheKey = new Request("https://clweb-internal.invalid/pixiv-token");
   const cached = await cache.match(cacheKey);
 
+  let previousToken = null;
   if (cached) {
-    const token = await cached.json();
-    if (token.access_token && token.refresh_token) return token;
+    previousToken = await cached.json();
+    if (
+      previousToken.access_token &&
+      previousToken.refresh_token &&
+      Number(previousToken.expires_at) > Date.now() + 60_000
+    ) {
+      return previousToken;
+    }
   }
 
-  if (!env.PIXIV_REFRESH_TOKEN) {
+  const refreshToken =
+    previousToken?.refresh_token || env.PIXIV_REFRESH_TOKEN;
+
+  if (!refreshToken) {
     throw new Error("PIXIV_NOT_CONFIGURED");
   }
 
@@ -81,7 +91,7 @@ async function getAccessToken(env) {
     client_id: "MOBrBDS8blbauoSck0ZfDbtuzpyT",
     client_secret: "lsACyCD94FhDUtGTXi3QzcFE2uU1hqtDaKeqrdwj",
     grant_type: "refresh_token",
-    refresh_token: env.PIXIV_REFRESH_TOKEN,
+    refresh_token: refreshToken,
     include_policy: "true"
   });
 
@@ -110,11 +120,15 @@ async function getAccessToken(env) {
     expires_at: Date.now() + Math.max(60, Number(result.expires_in || 3600) - 120) * 1000
   };
 
-  const ttl = Math.max(60, Math.floor((token.expires_at - Date.now()) / 1000));
+  // Keep the latest refresh token in the edge cache beyond the access-token lifetime.
+  // The access token itself is only reused until expires_at.
   await cache.put(
     cacheKey,
     new Response(JSON.stringify(token), {
-      headers: { "Cache-Control": `public, max-age=${ttl}`, "Content-Type": "application/json" }
+      headers: {
+        "Cache-Control": "public, max-age=1209600",
+        "Content-Type": "application/json"
+      }
     })
   );
 
