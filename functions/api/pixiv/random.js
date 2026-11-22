@@ -65,7 +65,12 @@ function pixivHeaders() {
 
 async function getAccessToken(env) {
   const cache = caches.default;
-  const cacheKey = new Request("https://clweb-internal.invalid/pixiv-token");
+  // Tie cached rotated tokens to the currently configured secret. This prevents an old
+  // cached refresh token from overriding a newly updated Cloudflare Secret.
+  const configuredRefreshToken = env.PIXIV_REFRESH_TOKEN || "";
+  const cacheKey = new Request(
+    "https://clweb-internal.invalid/pixiv-token/" + md5(configuredRefreshToken)
+  );
   const cached = await cache.match(cacheKey);
 
   let previousToken = null;
@@ -81,7 +86,7 @@ async function getAccessToken(env) {
   }
 
   const refreshToken =
-    previousToken?.refresh_token || env.PIXIV_REFRESH_TOKEN;
+    previousToken?.refresh_token || configuredRefreshToken;
 
   if (!refreshToken) {
     throw new Error("PIXIV_NOT_CONFIGURED");
@@ -106,7 +111,10 @@ async function getAccessToken(env) {
   });
 
   if (!response.ok) {
-    throw new Error("PIXIV_AUTH_FAILED");
+    let upstream = {};
+    try { upstream = await response.json(); } catch {}
+    const pixivCode = upstream?.errors?.system?.code || upstream?.error || "unknown";
+    throw new Error(`PIXIV_AUTH_FAILED:${response.status}:${String(pixivCode).slice(0, 80)}`);
   }
 
   const result = await response.json();
@@ -204,8 +212,8 @@ export async function onRequestGet({ env }) {
     const status = message === "PIXIV_NOT_CONFIGURED" ? 503 : 502;
     const publicMessage = message === "PIXIV_NOT_CONFIGURED"
       ? "服务器尚未配置 Pixiv Token。"
-      : message === "PIXIV_AUTH_FAILED"
-        ? "Pixiv 授权失败，请检查 Refresh Token 是否有效。"
+      : message?.startsWith("PIXIV_AUTH_FAILED:")
+        ? "Pixiv 授权失败。诊断信息：" + message.slice("PIXIV_AUTH_FAILED:".length)
         : "获取 Pixiv 插画失败，请稍后重试。";
 
     return new Response(
