@@ -111,10 +111,22 @@ async function getAccessToken(env) {
   });
 
   if (!response.ok) {
+    const contentType = response.headers.get("content-type") || "unknown";
+    const rawBody = await response.text();
     let upstream = {};
-    try { upstream = await response.json(); } catch {}
-    const pixivCode = upstream?.errors?.system?.code || upstream?.error || "unknown";
-    throw new Error(`PIXIV_AUTH_FAILED:${response.status}:${String(pixivCode).slice(0, 80)}`);
+    try { upstream = JSON.parse(rawBody); } catch {}
+    const candidates = [
+      upstream?.errors?.system?.code,
+      upstream?.errors?.system?.message,
+      upstream?.error?.message,
+      upstream?.error,
+      upstream?.message,
+      upstream?.reason
+    ].filter(value => typeof value === "string" && value.length);
+    const detail = candidates[0]
+      ? candidates[0].replace(/[\\r\\n]+/g, " ").slice(0, 100)
+      : rawBody.replace(/<[^>]*>/g, " ").replace(/[\\r\\n\\t]+/g, " ").replace(/\\s+/g, " ").slice(0, 100) || "empty response";
+    throw new Error(`PIXIV_AUTH_FAILED:${response.status}:${contentType}:${detail}`);
   }
 
   const result = await response.json();
