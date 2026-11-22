@@ -1,4 +1,4 @@
-export async function onRequestGet({ env }) {
+export async function onRequestGet({ request, env }) {
   const headers = {
     "Content-Type": "application/json; charset=utf-8",
     "Cache-Control": "no-store",
@@ -20,7 +20,8 @@ export async function onRequestGet({ env }) {
       method: "GET",
       headers: {
         Authorization: `Bearer ${relaySecret}`,
-        Accept: "application/json"
+        Accept: "application/json",
+        "X-Client-IP": request.headers.get("CF-Connecting-IP") || ""
       },
       signal: AbortSignal.timeout(90000)
     });
