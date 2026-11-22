@@ -257,34 +257,30 @@ const pixivImage = document.getElementById("pixiv-image");
 const pixivInfo = document.getElementById("pixiv-info");
 const pixivOriginal = document.getElementById("pixiv-original");
 
-if (
-  pixivAgeConfirm &&
-  pixivRandomButton &&
-  pixivStatus &&
-  pixivResult &&
-  pixivImage &&
-  pixivInfo &&
-  pixivOriginal
-) {
+if (pixivAgeConfirm && pixivRandomButton) {
   const syncPixivButton = () => {
     pixivRandomButton.disabled = !pixivAgeConfirm.checked;
   };
 
-  // Handle both input and change events, and initialize the state immediately.
+  // Bind the checkbox independently from the optional result-display elements.
+  pixivAgeConfirm.addEventListener("click", syncPixivButton);
   pixivAgeConfirm.addEventListener("input", syncPixivButton);
   pixivAgeConfirm.addEventListener("change", syncPixivButton);
   syncPixivButton();
 
   pixivRandomButton.addEventListener("click", async () => {
     if (!pixivAgeConfirm.checked) {
-      pixivStatus.textContent = "请先确认自己已年满 18 周岁。";
+      if (pixivStatus) {
+        pixivStatus.textContent = "请先确认自己已年满 18 周岁。";
+      }
+      syncPixivButton();
       return;
     }
 
     pixivRandomButton.disabled = true;
     pixivRandomButton.textContent = "正在获取插画……";
-    pixivStatus.textContent = "正在连接 Pixiv，请稍候。";
-    pixivResult.hidden = true;
+    if (pixivStatus) pixivStatus.textContent = "正在连接 Pixiv，请稍候。";
+    if (pixivResult) pixivResult.hidden = true;
 
     try {
       const response = await fetch("/api/pixiv/random", {
@@ -300,17 +296,22 @@ if (
       }
 
       const illust = result.illust;
+      if (!pixivImage || !pixivInfo || !pixivOriginal || !pixivResult) {
+        throw new Error("页面缺少插画展示区域，请刷新页面后重试。");
+      }
+
       const proxiedImage = "/api/pixiv/image?url=" +
         encodeURIComponent(illust.image);
 
       pixivImage.onload = () => {
         pixivResult.hidden = false;
-        pixivStatus.textContent = "已获取一张 Pixiv R-18 插画。";
+        if (pixivStatus) pixivStatus.textContent = "已获取一张 Pixiv R-18 插画。";
       };
       pixivImage.onerror = () => {
         pixivResult.hidden = true;
-        pixivStatus.textContent =
-          "插画信息已获取，但图片加载失败。请再试一次。";
+        if (pixivStatus) {
+          pixivStatus.textContent = "插画信息已获取，但图片加载失败。请再试一次。";
+        }
       };
 
       pixivImage.alt = illust.title || "Pixiv R-18 插画";
@@ -321,12 +322,14 @@ if (
       pixivOriginal.href = illust.originalUrl;
       pixivOriginal.textContent = "在 Pixiv 查看原作品";
       pixivResult.hidden = false;
-      pixivStatus.textContent = "插画信息已获取，正在加载图片。";
+      if (pixivStatus) pixivStatus.textContent = "插画信息已获取，正在加载图片。";
     } catch (error) {
-      pixivStatus.textContent =
-        error.message || "暂时无法获取 Pixiv 插画，请稍后重试。";
+      if (pixivStatus) {
+        pixivStatus.textContent =
+          error.message || "暂时无法获取 Pixiv 插画，请稍后重试。";
+      }
     } finally {
-      pixivRandomButton.disabled = !pixivAgeConfirm.checked;
+      syncPixivButton();
       pixivRandomButton.textContent = "再来一张 Pixiv 随机图";
     }
   });
