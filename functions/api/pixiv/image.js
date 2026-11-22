@@ -37,15 +37,26 @@ export async function onRequestGet({ request, env }) {
     const upstream = await fetch(relayEndpoint.toString(), {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${relaySecret}`
+        Authorization: `Bearer ${relaySecret}`,
+        "X-Client-IP": request.headers.get("CF-Connecting-IP") || ""
       },
       signal: AbortSignal.timeout(90000)
     });
 
     if (!upstream.ok) {
-      return new Response("Pixiv image is unavailable.", {
-        status: upstream.status === 404 ? 404 : 502
-      });
+      const responseHeaders = {};
+      const retryAfter = upstream.headers.get("Retry-After");
+      if (retryAfter) responseHeaders["Retry-After"] = retryAfter;
+
+      return new Response(
+        upstream.status === 429
+          ? "请求过于频繁，请稍后再试。"
+          : "Pixiv image is unavailable.",
+        {
+          status: upstream.status === 429 ? 429 : upstream.status === 404 ? 404 : 502,
+          headers: responseHeaders
+        }
+      );
     }
 
     const contentType = upstream.headers.get("Content-Type") || "";
