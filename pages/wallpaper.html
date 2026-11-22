@@ -47,6 +47,40 @@
       <button id="next-button" class="next-button" type="button">
         随机切换下一张
       </button>
+            <!-- Pixiv R-18 随机图片 -->
+      <section id="pixiv-section" class="pixiv-section">
+        <h2>Pixiv Random</h2>
+
+        <p class="pixiv-warning">
+          ⚠ 警告：随机图片为 R-18 成人内容，
+          仅限年满 18 周岁的用户查看。
+        </p>
+
+        <label class="pixiv-age-check">
+          <input type="checkbox" id="pixiv-age-confirm">
+          我确认自己已年满 18 周岁
+        </label>
+
+        <button
+          id="pixiv-random-button"
+          class="pixiv-button"
+          type="button"
+          disabled
+        >
+          查看 Pixiv 随机图
+        </button>
+
+        <p id="pixiv-status" class="pixiv-status"></p>
+
+        <div id="pixiv-result" class="pixiv-result" hidden>
+          <img id="pixiv-image" alt="Pixiv 插画">
+          <p id="pixiv-info"></p>
+          <a id="pixiv-original" target="_blank"
+             rel="noopener noreferrer">
+            查看 Pixiv 原作品
+          </a>
+        </div>
+      </section>
     </section>
   </main>
 </body>
